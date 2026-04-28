@@ -113,15 +113,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            TextField(controller: _controller),
-
-            ElevatedButton(
-              onPressed: _sendMessage,
-              child: Text('Send message'),
-            ),
+            
 
             Expanded(
-              child: ListView.builder(
+              child: ListView.separated(
+                separatorBuilder: (context, index) => const Divider(),
                 itemCount: messages.length,
                 itemBuilder: (context, index) {
                   return ListTile(
@@ -133,6 +129,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   );
                 },
               ),
+            ),
+            TextField(controller: _controller),
+SizedBox(height: 10,),
+            ElevatedButton(
+              onPressed: _sendMessage,
+              child: Text('Send message'),
             ),
           ],
         ),
