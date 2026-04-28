@@ -41,6 +41,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final TextEditingController _controller = TextEditingController();
 
+  @override
+  void dispose() {
+    channel.sink.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
