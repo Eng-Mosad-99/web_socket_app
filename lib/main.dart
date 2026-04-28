@@ -56,7 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
               });
             },
             onDone: () {
-              print('Done');
+              print('Connection Finished');
+              _reconnect();
             },
           )
           .onError((error) {
@@ -88,6 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void dispose() {
     channel.sink.close();
     _controller.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
