@@ -55,7 +55,25 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             TextField(controller: _controller),
-            
+            StreamBuilder(
+              stream: channel.stream,
+              builder: (context, snapshot) {
+                // return Text(snapshot.hasData ? '${snapshot.data}' : '');
+
+                if (snapshot.hasData) {
+                  messages.add(snapshot.data);
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: messages.length,
+                    itemBuilder: (context, index) {
+                      return Text(messages[index]);
+                    },
+                  );
+                }
+
+                return Container();
+              },
+            ),
 
             ElevatedButton(
               onPressed: () {
