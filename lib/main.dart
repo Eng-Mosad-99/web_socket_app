@@ -85,6 +85,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final TextEditingController _controller = TextEditingController();
 
+  void _sendMessage() async {
+    if (_controller.text.isNotEmpty) {
+      await channel.ready;
+      channel.sink.add(_controller.text);
+    }
+    _controller.clear();
+  }
+
   @override
   void dispose() {
     channel.sink.close();
@@ -108,13 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
             TextField(controller: _controller),
 
             ElevatedButton(
-              onPressed: () async {
-                if (_controller.text.isNotEmpty) {
-                  await channel.ready;
-                  channel.sink.add(_controller.text);
-                }
-                _controller.clear();
-              },
+              onPressed: _sendMessage,
               child: Text('Send message'),
             ),
 
