@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -30,10 +32,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // Connect to the echo server
+  // Connect to a WebSocket server
   final WebSocketChannel channel = WebSocketChannel.connect(
     Uri.parse('wss://echo.websocket.org'),
   );
+
+  List<String> messages = [];
+
+  final TextEditingController _controller = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +52,18 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            ElevatedButton(onPressed: () {}, child: Text('Connect')),
+            TextField(controller: _controller),
+            
+
+            ElevatedButton(
+              onPressed: () {
+                channel.sink.add(_controller.text);
+                _controller.clear();
+              },
+              child: Text('Send message'),
+            ),
           ],
         ),
       ),
